@@ -16,9 +16,24 @@ SkillPilot is an MCP (Model Context Protocol) server that turns a single project
 
 3. **One command installs everything** — `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md`
 
+## How it works
+
+SkillPilot is a **local MCP server** — no cloud, no hosting, no deployment needed. Your IDE launches it as a local process and communicates via stdin/stdout. All data stays on your machine.
+
 ## Quick Start
 
-### In Cursor
+### 1. Clone and build
+
+```bash
+git clone https://github.com/EXZ1K/skillpilot.git
+cd skillpilot
+npm install
+npm run build
+```
+
+### 2. Connect to your IDE
+
+#### Cursor
 
 Add to `.cursor/mcp.json`:
 
@@ -27,7 +42,7 @@ Add to `.cursor/mcp.json`:
   "mcpServers": {
     "skillpilot": {
       "command": "node",
-      "args": ["path/to/skillpilot/dist/index.js", "--mcp"],
+      "args": ["C:/path/to/skillpilot/dist/index.js", "--mcp"],
       "env": {
         "GITHUB_TOKEN": "your_github_token"
       }
@@ -36,16 +51,20 @@ Add to `.cursor/mcp.json`:
 }
 ```
 
-### In Claude Code
+#### Claude Code
 
-Add to `.mcp.json`:
+```bash
+claude mcp add skillpilot node /path/to/skillpilot/dist/index.js --mcp
+```
+
+Or add to `.mcp.json`:
 
 ```json
 {
   "mcpServers": {
     "skillpilot": {
       "command": "node",
-      "args": ["path/to/skillpilot/dist/index.js", "--mcp"],
+      "args": ["/path/to/skillpilot/dist/index.js", "--mcp"],
       "env": {
         "GITHUB_TOKEN": "your_github_token"
       }
@@ -54,7 +73,15 @@ Add to `.mcp.json`:
 }
 ```
 
-Then ask your AI: **"Use skillpilot_plan for [your project description]"**
+#### Windsurf / Codex / any MCP-compatible IDE
+
+Same pattern — point `command` to `node` and `args` to `dist/index.js --mcp`.
+
+### 3. Use it
+
+Ask your AI: **"Use skillpilot_plan for [your project description]"**
+
+> **Note:** `GITHUB_TOKEN` is optional but recommended — without it GitHub API limits you to 60 requests/hour. [Create a token here](https://github.com/settings/tokens) (no scopes needed).
 
 ## MCP Tools
 
