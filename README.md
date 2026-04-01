@@ -1,13 +1,13 @@
-# SkillForge
+# SkillPilot
 
 > Describe your project → get a complete AI agent team with MCP servers, curated skills, and step-by-step roadmap.
 
-SkillForge is an MCP (Model Context Protocol) server that turns a single project description into a full implementation plan. It works inside any IDE that supports MCP — Cursor, Claude Code, Windsurf, Codex, and more.
+SkillPilot is an MCP (Model Context Protocol) server that turns a single project description into a full implementation plan. It works inside any IDE that supports MCP — Cursor, Claude Code, Windsurf, Codex, and more.
 
 ## What it does
 
 1. **You describe your project** — "veterinary clinic website with booking and payments"
-2. **SkillForge returns a complete plan:**
+2. **SkillPilot returns a complete plan:**
    - MCP agents to install (from 60+ curated catalog + 37K on GitHub)
    - Ready-to-use AI skills with full instructions (auth, payments, database, design, security...)
    - Open source projects to reference or fork
@@ -25,9 +25,9 @@ Add to `.cursor/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "skillforge": {
+    "skillpilot": {
       "command": "node",
-      "args": ["path/to/skillforge/dist/index.js", "--mcp"],
+      "args": ["path/to/skillpilot/dist/index.js", "--mcp"],
       "env": {
         "GITHUB_TOKEN": "your_github_token"
       }
@@ -43,9 +43,9 @@ Add to `.mcp.json`:
 ```json
 {
   "mcpServers": {
-    "skillforge": {
+    "skillpilot": {
       "command": "node",
-      "args": ["path/to/skillforge/dist/index.js", "--mcp"],
+      "args": ["path/to/skillpilot/dist/index.js", "--mcp"],
       "env": {
         "GITHUB_TOKEN": "your_github_token"
       }
@@ -54,19 +54,19 @@ Add to `.mcp.json`:
 }
 ```
 
-Then ask your AI: **"Use skillforge_plan for [your project description]"**
+Then ask your AI: **"Use skillpilot_plan for [your project description]"**
 
 ## MCP Tools
 
 | Tool | Description |
 |------|-------------|
-| `skillforge_plan` | **Main tool.** One request → complete plan with agents, skills, projects, API keys, roadmap |
-| `skillforge_catalog` | Browse 60+ curated MCP agents across 24 categories |
-| `skillforge_install` | Generate `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md` |
-| `skillforge_explain` | Detailed info about any agent or category |
-| `skillforge_discover` | Search 37K+ MCP servers on GitHub |
-| `skillforge_skills` | Find AI skills: universal prompts, IDE-specific, domain expert |
-| `skillforge_projects` | Find open source projects to fork or reference |
+| `skillpilot_plan` | **Main tool.** One request → complete plan with agents, skills, projects, API keys, roadmap |
+| `skillpilot_catalog` | Browse 60+ curated MCP agents across 24 categories |
+| `skillpilot_install` | Generate `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md` |
+| `skillpilot_explain` | Detailed info about any agent or category |
+| `skillpilot_discover` | Search 37K+ MCP servers on GitHub |
+| `skillpilot_skills` | Find AI skills: universal prompts, IDE-specific, domain expert |
+| `skillpilot_projects` | Find open source projects to fork or reference |
 
 ## 24 Agent Categories
 
@@ -74,7 +74,7 @@ auth, payments, database, ai, email, deploy, review, security, video, storage, a
 
 ## Built-in Skills
 
-SkillForge includes 18+ curated skills with ready-to-use instructions:
+SkillPilot includes 18+ curated skills with ready-to-use instructions:
 
 - **Auth** — Clerk setup, Supabase Auth, protected routes, OAuth
 - **Database** — Schema design, naming, indexes, migrations, RLS
@@ -90,7 +90,7 @@ These skills are included directly in the plan output and written to `.cursorrul
 
 ## How Skills Save Tokens
 
-Without skills, your AI spends thousands of tokens figuring out how to implement auth, structure a database, or set up Stripe. With SkillForge skills, it follows proven instructions — faster, cheaper, better.
+Without skills, your AI spends thousands of tokens figuring out how to implement auth, structure a database, or set up Stripe. With SkillPilot skills, it follows proven instructions — faster, cheaper, better.
 
 ## Smart Features
 
@@ -118,4 +118,4 @@ npm run dev       # development mode
 
 ## License
 
-MIT
+AGPL-3.0

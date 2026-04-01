@@ -1345,10 +1345,10 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
         description: "AI-скилл для маркетинга: SEO-оптимизация (мета-теги, структура, schema.org), копирайтинг (заголовки, CTA, описания), конверсия лендингов (расположение элементов, UX-паттерны), контент-стратегия.",
         mcpServer: {
           command: "npx",
-          args: ["-y", "skillforge-marketing-skill"],
+          args: ["-y", "skillpilot-marketing-skill"],
         },
         requiredEnvVars: [],
-        githubUrl: "https://github.com/skillforge/marketing-skill",
+        githubUrl: "https://github.com/skillpilot/marketing-skill",
         stars: 0,
         pros: "Универсальный маркетинговый скилл — SEO, копирайтинг, структура сайта, UX-паттерны конверсии",
         cons: "Это промпт/скилл, а не MCP-инструмент — работает через instructions, не через API",

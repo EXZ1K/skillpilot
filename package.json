@@ -1,10 +1,10 @@
 {
-  "name": "skillforge",
+  "name": "skillpilot",
   "version": "0.1.0",
   "description": "Describe your project → get a full AI agent team with skills discovered from GitHub",
   "type": "module",
   "bin": {
-    "skillforge": "./dist/index.js"
+    "skillpilot": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -19,9 +19,9 @@
     "claude",
     "cursor",
     "developer-tools",
-    "skillforge"
+    "skillpilot"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "@octokit/rest": "^21.1.1",

@@ -7,13 +7,13 @@
 
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import type { Skill, McpJsonFile, SkillForgeConfig } from "../types.js";
+import type { Skill, McpJsonFile, SkillPilotConfig } from "../types.js";
 
 /**
- * Создаёт .skillforge/ директорию со всеми конфигами.
+ * Создаёт .skillpilot/ директорию со всеми конфигами.
  *
  * Структура:
- *   .skillforge/
+ *   .skillpilot/
  *     config.json     — метаданные проекта
  *   .mcp.json         — конфиг MCP-серверов для IDE
  *   .env.example      — шаблон переменных окружения
@@ -24,10 +24,10 @@ export async function generateSkillPark(
   skills: Skill[],
 ): Promise<{ files: string[] }> {
   const createdFiles: string[] = [];
-  const skillforgeDir = join(targetDir, ".skillforge");
+  const skillpilotDir = join(targetDir, ".skillpilot");
 
-  // Создаём .skillforge/
-  await mkdir(skillforgeDir, { recursive: true });
+  // Создаём .skillpilot/
+  await mkdir(skillpilotDir, { recursive: true });
 
   // 1. .mcp.json — главный файл для IDE
   const mcpJson = buildMcpJson(skills);
@@ -43,16 +43,16 @@ export async function generateSkillPark(
     createdFiles.push(".env.example");
   }
 
-  // 3. .skillforge/config.json — метаданные
-  const config: SkillForgeConfig = {
+  // 3. .skillpilot/config.json — метаданные
+  const config: SkillPilotConfig = {
     version: "0.1.0",
     projectDescription,
     skills: skills.map((s) => s.id),
     createdAt: new Date().toISOString(),
   };
-  const configPath = join(skillforgeDir, "config.json");
+  const configPath = join(skillpilotDir, "config.json");
   await writeFile(configPath, JSON.stringify(config, null, 2), "utf-8");
-  createdFiles.push(".skillforge/config.json");
+  createdFiles.push(".skillpilot/config.json");
 
   return { files: createdFiles };
 }
@@ -83,8 +83,8 @@ function buildMcpJson(skills: Skill[]): McpJsonFile {
  */
 function buildEnvExample(skills: Skill[]): string {
   const lines: string[] = [
-    "# SkillForge — Environment Variables",
-    "# Fill in your API keys below. See .skillforge/config.json for details.",
+    "# SkillPilot — Environment Variables",
+    "# Fill in your API keys below. See .skillpilot/config.json for details.",
     "",
   ];
 

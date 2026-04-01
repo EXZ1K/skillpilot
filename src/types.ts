@@ -1,4 +1,4 @@
-/* ── Основные типы SkillForge ────────────────────── */
+/* ── Основные типы SkillPilot ────────────────────── */
 
 /** Конфигурация одного MCP-сервера для .mcp.json */
 export interface MCPServerConfig {
@@ -48,8 +48,8 @@ export interface SkillPark {
   generatedAt: string;
 }
 
-/** Конфиг .skillforge/config.json */
-export interface SkillForgeConfig {
+/** Конфиг .skillpilot/config.json */
+export interface SkillPilotConfig {
   version: string;
   projectDescription: string;
   skills: string[];  // skill IDs

@@ -15,7 +15,7 @@ import {
 } from "../src/skills/registry.js";
 
 /**
- * Simulates Phase 1 of skillforge_plan with both modes:
+ * Simulates Phase 1 of skillpilot_plan with both modes:
  * - If categories provided: use them + always_include
  * - If not: use matchCategories(description)
  */

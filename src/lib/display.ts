@@ -21,7 +21,7 @@ export function spinner(text: string): Ora {
 
 export function printBanner(): void {
   console.log("");
-  console.log(chalk.bold.cyan("  SkillForge") + chalk.gray(" — AI Agent Team Builder"));
+  console.log(chalk.bold.cyan("  SkillPilot") + chalk.gray(" — AI Agent Team Builder"));
   console.log(chalk.gray("  Describe your project. Get your agents."));
   console.log("");
 }

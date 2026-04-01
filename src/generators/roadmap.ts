@@ -32,7 +32,7 @@ export async function generateRoadmap(
   const lines: string[] = [
     `# Roadmap: ${projectDescription}`,
     "",
-    `> Сгенерировано SkillForge. Каждый шаг привязан к агенту — используйте команду в IDE.`,
+    `> Сгенерировано SkillPilot. Каждый шаг привязан к агенту — используйте команду в IDE.`,
     "",
   ];
 

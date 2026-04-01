@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 /**
- * SkillForge CLI — точка входа.
+ * SkillPilot CLI — точка входа.
  *
  * Использование:
- *   skillforge init "B2B SaaS for invoice management"
- *   skillforge init "ecommerce with AI chat" --yes
- *   skillforge init "portfolio site" --dir ./my-project
+ *   skillpilot init "B2B SaaS for invoice management"
+ *   skillpilot init "ecommerce with AI chat" --yes
+ *   skillpilot init "portfolio site" --dir ./my-project
  */
 
 import { Command } from "commander";
@@ -21,7 +21,7 @@ if (process.argv.includes("--mcp")) {
 const program = new Command();
 
 program
-  .name("skillforge")
+  .name("skillpilot")
   .description("Describe your project → get a full AI agent team")
   .version("0.1.0");
 
