@@ -1327,11 +1327,23 @@ server.registerTool(
         .optional()
         .default("claude")
         .describe("Your IDE — affects which skill formats to recommend. Default: claude."),
+      mode: z
+        .enum(["standard", "battle"])
+        .optional()
+        .default("standard")
+        .describe(
+          "Plan generation mode.\n" +
+          "- 'standard': one recommended plan (default)\n" +
+          "- 'battle': generates 3 competing strategies (Speed, Scale, Budget). " +
+          "YOU (the LLM) must then evaluate each strategy, find weaknesses, pick the winner, " +
+          "and implement the winning plan. This produces higher quality results through adversarial evaluation.",
+        ),
     }),
   },
-  async ({ description, categories, techStack, ide }) => {
+  async ({ description, categories, techStack, ide, mode }) => {
     const userIde = ide ?? "claude";
     const stack = techStack ?? "";
+    const planMode = mode ?? "standard";
 
     // ═══ PHASE 1: Определяем нужные категории ═══
     // 1) LLM передала categories → используем их (+ always_include).
@@ -1711,7 +1723,128 @@ server.registerTool(
       lines.push("");
     }
 
-    // ─── Footer ───
+    // ═══ BATTLE MODE: wrap everything in adversarial debate structure ═══
+    if (planMode === "battle") {
+      const battleLines: string[] = [];
+
+      battleLines.push("<!-- SkillPilot BATTLE MODE: You MUST follow the debate protocol below. -->");
+      battleLines.push("");
+      battleLines.push("# ⚔️ SkillPilot Battle Mode");
+      battleLines.push("");
+      battleLines.push(`> ${description}`);
+      battleLines.push("");
+      battleLines.push("## Debate Protocol");
+      battleLines.push("");
+      battleLines.push("You are now running an **adversarial evaluation**. This produces better results than a single plan.");
+      battleLines.push("Follow these steps EXACTLY:");
+      battleLines.push("");
+      battleLines.push("### Rules");
+      battleLines.push("1. Present 3 competing strategies to the user");
+      battleLines.push("2. For each strategy: list its strengths AND weaknesses honestly");
+      battleLines.push("3. Score each strategy on the criteria below (1-10)");
+      battleLines.push("4. Recommend a winner with clear justification");
+      battleLines.push("5. Ask user to confirm or pick a different strategy");
+      battleLines.push("6. Implement ONLY the winning strategy");
+      battleLines.push("");
+
+      // Generate 3 strategies from catalog data
+      battleLines.push("---");
+      battleLines.push("");
+      battleLines.push("## 🏎️ Team SPEED — Ship Fast");
+      battleLines.push("*Priority: time-to-market, simplicity, managed services*");
+      battleLines.push("");
+      battleLines.push("**Philosophy:** Use hosted/managed services for everything. Minimize custom code. Ship in days, not weeks.");
+      battleLines.push("");
+      battleLines.push("**Stack:**");
+      for (const { category, agent } of catalogAgents.slice(0, Math.min(catalogAgents.length, 8))) {
+        battleLines.push(`- ${category.label}: **${agent.name}** — ${agent.pros.split(",")[0]}`);
+      }
+      battleLines.push("");
+      battleLines.push("**Strengths:** Fastest to launch, least code to write, managed infrastructure");
+      battleLines.push("**Weaknesses:** Vendor lock-in, monthly costs add up, less control");
+      battleLines.push("");
+
+      battleLines.push("---");
+      battleLines.push("");
+      battleLines.push("## 🏗️ Team SCALE — Build to Last");
+      battleLines.push("*Priority: scalability, performance, control*");
+      battleLines.push("");
+      battleLines.push("**Philosophy:** Own your infrastructure. Use open-source alternatives. Design for 10x growth from day one.");
+      battleLines.push("");
+      battleLines.push("**Stack:**");
+      for (const { category, alternatives, agent } of catalogAgents.slice(0, Math.min(catalogAgents.length, 8))) {
+        const pick = alternatives.length > 0 ? alternatives[0] : agent;
+        battleLines.push(`- ${category.label}: **${pick.name}** — ${pick.pros.split(",")[0]}`);
+      }
+      battleLines.push("");
+      battleLines.push("**Strengths:** No vendor lock-in, lower long-term costs, full control, self-hostable");
+      battleLines.push("**Weaknesses:** More setup time, more DevOps needed, steeper learning curve");
+      battleLines.push("");
+
+      battleLines.push("---");
+      battleLines.push("");
+      battleLines.push("## 💰 Team BUDGET — Minimize Cost");
+      battleLines.push("*Priority: free tiers, open source, minimal infrastructure*");
+      battleLines.push("");
+      battleLines.push("**Philosophy:** Use free tiers of everything. Open source where possible. Keep running costs near $0 until revenue.");
+      battleLines.push("");
+      battleLines.push("**Stack:**");
+      for (const { category, alternatives, agent } of catalogAgents.slice(0, Math.min(catalogAgents.length, 8))) {
+        // Prefer alternative with "free" or "open" in description, otherwise use recommended
+        const freePick = alternatives.find(a =>
+          a.pros.toLowerCase().includes("free") ||
+          a.pros.toLowerCase().includes("open") ||
+          a.pros.toLowerCase().includes("self-host")
+        ) ?? agent;
+        battleLines.push(`- ${category.label}: **${freePick.name}** — ${freePick.pros.split(",")[0]}`);
+      }
+      battleLines.push("");
+      battleLines.push("**Strengths:** Near-zero costs, no surprise bills, good for MVPs and side projects");
+      battleLines.push("**Weaknesses:** Free tier limits, may need migration when scaling, less support");
+      battleLines.push("");
+
+      // Scoring criteria
+      battleLines.push("---");
+      battleLines.push("");
+      battleLines.push("## Evaluation Criteria");
+      battleLines.push("");
+      battleLines.push("Score each team 1-10 on these criteria, then calculate total:");
+      battleLines.push("");
+      battleLines.push("| Criteria | Weight | Description |");
+      battleLines.push("|----------|--------|-------------|");
+      battleLines.push("| Time to MVP | 25% | How fast can we ship a working version? |");
+      battleLines.push("| Monthly Cost | 20% | Estimated running cost at launch |");
+      battleLines.push("| Scalability | 20% | Can it handle 10x-100x growth? |");
+      battleLines.push("| Developer Experience | 15% | How easy to develop and debug? |");
+      battleLines.push("| Vendor Independence | 10% | How easy to migrate away? |");
+      battleLines.push("| Community & Docs | 10% | Quality of docs, community size |");
+      battleLines.push("");
+      battleLines.push("## Your Task");
+      battleLines.push("");
+      battleLines.push("**NOW you must:**");
+      battleLines.push("1. Fill in the scoring table for all 3 teams");
+      battleLines.push("2. Calculate weighted totals");
+      battleLines.push("3. Identify the winner and explain WHY");
+      battleLines.push("4. List the top risk for the winning strategy and how to mitigate it");
+      battleLines.push("5. Present to the user and ask: **\"Which strategy do you prefer? I recommend Team [X] because [reason].\"**");
+      battleLines.push("6. After user confirms — implement using the skills and roadmap below");
+      battleLines.push("");
+
+      // Append the full plan as reference material
+      battleLines.push("---");
+      battleLines.push("");
+      battleLines.push("## Reference: Full Skills & Roadmap");
+      battleLines.push("");
+      battleLines.push("Use these for implementation after the winner is chosen:");
+      battleLines.push("");
+      battleLines.push(...lines.slice(lines.indexOf("## 2. AI Skills (ready-to-use instructions)")));
+
+      return {
+        content: [{ type: "text" as const, text: battleLines.join("\n") }],
+      };
+    }
+
+    // ─── Footer (standard mode) ───
     lines.push("---");
     lines.push(`**Total: ${catalogAgents.length} MCP agents, ${matchedCategories.length} categories, ${allEnvVars.length} API keys needed**`);
     lines.push("");

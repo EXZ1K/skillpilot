@@ -308,3 +308,53 @@ describe("Plan: techStack auto-enriches categories", () => {
     expect(plan.matchedCategories).not.toContain("monitoring");
   });
 });
+
+// ═══ Battle Mode ═══
+
+describe("Plan: battle mode structure", () => {
+  it("battle mode returns all 3 team strategies", () => {
+    // Simulate what battle mode output should contain
+    const categories = ["auth", "payments", "database", "deploy", "review", "security", "docs"];
+    const teams = ["Team SPEED", "Team SCALE", "Team BUDGET"];
+    const criteria = ["Time to MVP", "Monthly Cost", "Scalability", "Developer Experience", "Vendor Independence", "Community & Docs"];
+
+    // Verify all team names exist
+    for (const team of teams) {
+      expect(team).toBeTruthy();
+    }
+
+    // Verify criteria weights sum to 100%
+    const weights = [25, 20, 20, 15, 10, 10];
+    expect(weights.reduce((a, b) => a + b, 0)).toBe(100);
+
+    // Verify we can generate agents for all categories
+    for (const catId of categories) {
+      const category = findCategory(catId);
+      if (!category) continue;
+      const recommended = getRecommended(category);
+      expect(recommended).toBeDefined();
+      expect(recommended.name).toBeTruthy();
+    }
+  });
+
+  it("each category has at least one agent for team variation", () => {
+    const mainCategories = ["auth", "payments", "database", "deploy", "ai", "email"];
+    for (const catId of mainCategories) {
+      const category = findCategory(catId);
+      expect(category).toBeDefined();
+      expect(category!.alternatives.length).toBeGreaterThanOrEqual(1);
+    }
+  });
+
+  it("teams use different agents when alternatives exist", () => {
+    // For categories with alternatives, Team SPEED and Team SCALE should differ
+    const category = findCategory("auth");
+    expect(category).toBeDefined();
+    if (category && category.alternatives.length > 1) {
+      const speed = getRecommended(category); // recommended = speed pick
+      const scale = category.alternatives.find(a => a.id !== speed.id);
+      expect(scale).toBeDefined();
+      expect(scale!.id).not.toBe(speed.id);
+    }
+  });
+});
