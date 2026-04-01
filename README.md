@@ -16,6 +16,29 @@ SkillPilot is an MCP (Model Context Protocol) server that turns a single project
 
 3. **One command installs everything** — `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md`
 
+## ⚔️ Battle Mode — adversarial evaluation
+
+Instead of one plan, generate **3 competing strategies** and let your IDE's AI pick the best:
+
+```
+"Use skillpilot_plan in battle mode for an online marketplace"
+```
+
+| Team | Priority | Philosophy |
+|------|----------|------------|
+| 🏎️ **SPEED** | Time-to-market | Managed services, ship in days |
+| 🏗️ **SCALE** | Scalability | Open-source, self-hosted, 10x ready |
+| 💰 **BUDGET** | Minimize cost | Free tiers, near-zero running costs |
+
+Each team proposes a full stack with agents and skills. Your AI then:
+1. Scores each strategy on 6 weighted criteria
+2. Identifies strengths and weaknesses
+3. Picks the winner with justification
+4. Asks you to confirm
+5. Implements only the winning plan
+
+This produces higher quality results through adversarial evaluation — instead of one opinion, you get a competition of ideas.
+
 ## How it works
 
 SkillPilot is a **local MCP server** — no cloud, no hosting, no deployment needed. Your IDE launches it as a local process and communicates via stdin/stdout. All data stays on your machine.
@@ -37,7 +60,7 @@ npm install
 npm run build
 ```
 
-### 2. Connect to your IDE
+### Connect to your IDE
 
 #### Cursor
 
@@ -47,8 +70,8 @@ Add to `.cursor/mcp.json`:
 {
   "mcpServers": {
     "skillpilot": {
-      "command": "node",
-      "args": ["C:/path/to/skillpilot/dist/index.js", "--mcp"],
+      "command": "npx",
+      "args": ["-y", "@exz1k/skill-pilot", "--mcp"],
       "env": {
         "GITHUB_TOKEN": "your_github_token"
       }
@@ -60,32 +83,24 @@ Add to `.cursor/mcp.json`:
 #### Claude Code
 
 ```bash
-claude mcp add skillpilot node /path/to/skillpilot/dist/index.js --mcp
-```
-
-Or add to `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "skillpilot": {
-      "command": "node",
-      "args": ["/path/to/skillpilot/dist/index.js", "--mcp"],
-      "env": {
-        "GITHUB_TOKEN": "your_github_token"
-      }
-    }
-  }
-}
+claude mcp add skillpilot -- npx -y @exz1k/skill-pilot --mcp
 ```
 
 #### Windsurf / Codex / any MCP-compatible IDE
 
-Same pattern — point `command` to `node` and `args` to `dist/index.js --mcp`.
+Same pattern — use `npx -y @exz1k/skill-pilot --mcp` as the command.
 
-### 3. Use it
+### Use it
 
-Ask your AI: **"Use skillpilot_plan for [your project description]"**
+```
+"Use skillpilot_plan for [your project description]"
+```
+
+For battle mode:
+
+```
+"Use skillpilot_plan in battle mode for [your project description]"
+```
 
 > **Note:** `GITHUB_TOKEN` is optional but recommended — without it GitHub API limits you to 60 requests/hour. [Create a token here](https://github.com/settings/tokens) (no scopes needed).
 
@@ -93,7 +108,7 @@ Ask your AI: **"Use skillpilot_plan for [your project description]"**
 
 | Tool | Description |
 |------|-------------|
-| `skillpilot_plan` | **Main tool.** One request → complete plan with agents, skills, projects, API keys, roadmap |
+| `skillpilot_plan` | **Main tool.** One request → complete plan with agents, skills, projects, API keys, roadmap. Supports `mode: "battle"` for adversarial evaluation. |
 | `skillpilot_catalog` | Browse 60+ curated MCP agents across 24 categories |
 | `skillpilot_install` | Generate `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md` |
 | `skillpilot_explain` | Detailed info about any agent or category |
@@ -107,26 +122,27 @@ auth, payments, database, ai, email, deploy, review, security, video, storage, a
 
 ## Built-in Skills
 
-SkillPilot includes 18+ curated skills with ready-to-use instructions:
+19 curated skills with ready-to-use instructions across all categories:
 
-- **Auth** — Clerk setup, Supabase Auth, protected routes, OAuth
-- **Database** — Schema design, naming, indexes, migrations, RLS
-- **Payments** — Stripe Checkout, subscriptions, webhooks
-- **AI** — Vercel AI SDK, streaming, context management, token optimization
-- **Design** — Tailwind + shadcn/ui, responsive, dark mode, accessibility
+- **Auth** — providers, sessions, protected routes, OAuth, roles
+- **Database** — schema design, naming, indexes, migrations, RLS
+- **Payments** — checkout flow, subscriptions, webhooks, error handling
+- **AI** — streaming chat, context management, token optimization, RAG
+- **Design** — component architecture, responsive, dark mode, accessibility
 - **Marketing** — SEO, meta tags, landing page structure, schema.org
-- **Deploy** — Vercel, env vars, preview deployments, pre-deploy checklist
+- **Deploy** — CI/CD pipeline, env vars, preview deployments, checklist
 - **Security** — OWASP top 10, input validation, SQL injection, secrets
 - **And more:** email, analytics, monitoring, testing, cache, search, CMS, video, storage, notifications
 
-These skills are included directly in the plan output and written to `.cursorrules`/`CLAUDE.md` on install.
+Skills are universal — they describe patterns and principles, not vendor-specific code. Your AI picks the right tools for your stack.
 
 ## How Skills Save Tokens
 
-Without skills, your AI spends thousands of tokens figuring out how to implement auth, structure a database, or set up Stripe. With SkillPilot skills, it follows proven instructions — faster, cheaper, better.
+Without skills, your AI spends thousands of tokens figuring out how to implement auth, structure a database, or set up payments. With SkillPilot skills, it follows proven instructions — faster, cheaper, better.
 
 ## Smart Features
 
+- **Battle Mode** — 3 competing strategies evaluated by your AI for higher quality plans
 - **LLM-driven categories** — Your IDE's AI picks the right categories, no keyword guessing
 - **Stack enrichment** — Redis in your stack? Cache skill auto-included. Python + FastAPI? AI skill added.
 - **GitHub discovery** — Finds relevant MCP servers, skills, and projects beyond the built-in catalog
@@ -137,7 +153,7 @@ Without skills, your AI spends thousands of tokens figuring out how to implement
 ```bash
 npm install
 npm run build
-npm test          # 157 tests
+npm test          # 160 tests
 npm run dev       # development mode
 ```
 
