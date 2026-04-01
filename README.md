@@ -22,7 +22,13 @@ SkillPilot is a **local MCP server** — no cloud, no hosting, no deployment nee
 
 ## Quick Start
 
-### 1. Clone and build
+### Option A: Install from npm
+
+```bash
+npm install -g @exz1k/skill-pilot
+```
+
+### Option B: Clone and build
 
 ```bash
 git clone https://github.com/EXZ1K/skillpilot.git
