@@ -1,0 +1,43 @@
+{
+  "name": "skillforge",
+  "version": "0.1.0",
+  "description": "Describe your project → get a full AI agent team with skills discovered from GitHub",
+  "type": "module",
+  "bin": {
+    "skillforge": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "node --experimental-strip-types src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "mcp",
+    "ai-agents",
+    "claude",
+    "cursor",
+    "developer-tools",
+    "skillforge"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@octokit/rest": "^21.1.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "dotenv": "^16.5.0",
+    "inquirer": "^12.5.2",
+    "ora": "^8.2.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
