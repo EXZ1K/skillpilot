@@ -84,13 +84,13 @@ describe("getSkillsForCategories", () => {
 
 describe("searchSkills", () => {
   it("finds skills by tag", () => {
-    const results = searchSkills("stripe");
+    const results = searchSkills("payments");
     expect(results.length).toBeGreaterThanOrEqual(1);
     expect(results[0].category).toBe("payments");
   });
 
   it("finds skills by name", () => {
-    const results = searchSkills("Clerk");
+    const results = searchSkills("Authentication");
     expect(results.length).toBeGreaterThanOrEqual(1);
   });
 
