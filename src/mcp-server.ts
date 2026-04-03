@@ -1,19 +1,21 @@
 #!/usr/bin/env node
 
 /**
- * SkillPilot MCP Server — 7 tools
+ * SkillPilot MCP Server — 9 tools
  *
  * Принцип: человек ставит наш MCP → делает ОДИН запрос → получает ПОЛНЫЙ план.
  * IDE-агент работает по этому плану автономно. Никаких дополнительных поисков.
  *
  * Tools:
- *   1. plan       → ГЛАВНЫЙ: описание проекта → полный план (MCP + Skills + Projects + Roadmap)
- *   2. catalog    → 59 проверенных MCP-агентов в 24 категориях
- *   3. install    → генерирует .mcp.json, .env.example, ROADMAP.md
- *   4. explain    → детали по одному агенту/категории
- *   5. discover   → ищет MCP-серверы на GitHub (37K+)
- *   6. skills     → ищет AI Skills: универсальные, IDE-specific, доменные
- *   7. projects   → ищет готовые open source проекты для форка
+ *   1. plan           → ГЛАВНЫЙ: описание проекта → полный план (MCP + Skills + Projects + Roadmap)
+ *   2. catalog        → 59 проверенных MCP-агентов в 24 категориях
+ *   3. install        → генерирует .mcp.json, .env.example, ROADMAP.md
+ *   4. explain        → детали по одному агенту/категории
+ *   5. discover       → ищет MCP-серверы на GitHub (37K+)
+ *   6. skills         → ищет AI Skills: универсальные, IDE-specific, доменные
+ *   7. projects       → ищет готовые open source проекты для форка
+ *   8. team_estimate  → оценка команды агентов: роли, тиры, стоимость в токенах
+ *   9. team           → создаёт команду агентов с оружием (Parallel Swarm)
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -1981,6 +1983,147 @@ function getStepTasks(categoryId: string, description: string): string[] {
       ];
   }
 }
+
+/* ═══════════════════════════════════════════════════
+   Tool 8: TEAM ESTIMATE
+   Показывает оценку команды ДО создания.
+   Человек решает, сколько токенов готов потратить.
+   ═══════════════════════════════════════════════════ */
+
+import { estimateTeam, TEAM_TIERS, formatTeam, buildTeam } from "./agents/team-builder.js";
+
+server.registerTool(
+  "skillpilot_team_estimate",
+  {
+    title: "Estimate Agent Team — see costs before committing",
+    description:
+      "CALL THIS FIRST before creating a team. Shows:\n" +
+      "- Which agent roles your project needs\n" +
+      "- 4 team size options with token budgets\n" +
+      "- What each tier includes\n\n" +
+      "The user MUST choose a tier before you call skillpilot_team.\n" +
+      "Always present this as a clear choice to the user.",
+    inputSchema: z.object({
+      description: z
+        .string()
+        .describe("Project description: 'SaaS for invoice management', 'poker multiplayer game', etc."),
+    }),
+  },
+  async ({ description }) => {
+    const estimate = estimateTeam(description);
+
+    const lines: string[] = [
+      `# Agent Team Estimate`,
+      "",
+      `> ${description}`,
+      "",
+      `## Detected Categories`,
+      `${estimate.categories.join(", ")}`,
+      "",
+      `## Matched Roles (${estimate.matchedRoles.length})`,
+      ...estimate.matchedRoles.map((r) => `- ${r}`),
+      "",
+      `## Choose Your Team Size`,
+      "",
+      "| Tier | Agents | Structure | Tokens | Best For |",
+      "|------|--------|-----------|--------|----------|",
+    ];
+
+    for (const tier of estimate.tiers) {
+      const structure = `1 lead + ${tier.coreAgents} agents × 2 subs`;
+      lines.push(
+        `| **${tier.name}** | ${tier.totalAgents} | ${structure} | ${tier.estimatedTokens} | ${tier.description} |`,
+      );
+    }
+
+    // Community skills preview
+    if (estimate.roleSkills.length > 0) {
+      lines.push("");
+      lines.push("## Community Skills per Role");
+      lines.push("Each agent will be armed with real skills from [antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills) (1,340+ skills):");
+      lines.push("");
+      for (const rs of estimate.roleSkills) {
+        lines.push(`**${rs.role}:**`);
+        for (const s of rs.skills) {
+          lines.push(`  - ⚔️ ${s}`);
+        }
+        lines.push("");
+      }
+    }
+
+    lines.push("## How It Works");
+    lines.push("");
+    lines.push("1. **Lead Agent** — strategist, coordinates the team, resolves conflicts");
+    lines.push("2. **Core Agents** — each owns a domain (backend, frontend, security...)");
+    lines.push("3. **Sub-Agents** — 2 per core agent, handle specialized sub-tasks");
+    lines.push("4. **Weapons** — MCP servers (🔫) + expert prompts (📜) + community skills (⚔️)");
+    lines.push("5. **Parallel Swarm** — all agents work simultaneously, Lead merges results");
+    lines.push("6. **Skills loaded at runtime** — full SKILL.md content fetched from GitHub");
+    lines.push("");
+    lines.push("---");
+    lines.push("**Ask the user which tier they want, then call `skillpilot_team` with their choice.**");
+
+    return {
+      content: [{ type: "text", text: lines.join("\n") }],
+    };
+  },
+);
+
+/* ═══════════════════════════════════════════════════
+   Tool 9: TEAM
+   Создаёт полную команду агентов с оружием.
+   Parallel Swarm: все работают одновременно.
+   ═══════════════════════════════════════════════════ */
+
+server.registerTool(
+  "skillpilot_team",
+  {
+    title: "Create Agent Team — parallel swarm with weapons",
+    description:
+      "Creates a full hierarchical agent team for the project.\n\n" +
+      "IMPORTANT: Call skillpilot_team_estimate FIRST to show options to the user.\n" +
+      "Only call this after the user has chosen a tier.\n\n" +
+      "Structure:\n" +
+      "- 1 Lead Agent (strategist, final decisions)\n" +
+      "- N Core Agents (each with a role: backend, frontend, security...)\n" +
+      "- 2 Sub-Agents per Core Agent (specialized helpers)\n" +
+      "- Each agent is armed with MCP servers (🔫), expert prompts (📜), and community skills (⚔️)\n" +
+      "- Community skills are loaded at runtime from github.com/sickn33/antigravity-awesome-skills\n\n" +
+      "Mode: Parallel Swarm — all agents launch simultaneously.\n" +
+      "Lead collects results and resolves integration conflicts.",
+    inputSchema: z.object({
+      description: z
+        .string()
+        .describe("Project description"),
+      tier: z
+        .enum(["squad", "platoon", "company", "battalion"])
+        .describe(
+          "Team size tier chosen by the user:\n" +
+          "- squad (8 agents, ~50K tokens) — single feature\n" +
+          "- platoon (16 agents, ~120K tokens) — full app\n" +
+          "- company (24 agents, ~200K tokens) — complex SaaS\n" +
+          "- battalion (28 agents, ~300K tokens) — enterprise",
+        ),
+    }),
+  },
+  async ({ description, tier }) => {
+    try {
+      const team = await buildTeam(description, tier);
+      const output = formatTeam(team);
+
+      return {
+        content: [{ type: "text", text: output }],
+      };
+    } catch (err) {
+      return {
+        content: [{
+          type: "text",
+          text: `Error building team: ${err instanceof Error ? err.message : String(err)}`,
+        }],
+      };
+    }
+  },
+);
 
 /* ═══════════════════════════════════════════════════
    Start

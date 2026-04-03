@@ -64,3 +64,74 @@ export interface McpJsonFile {
     env?: Record<string, string>;
   }>;
 }
+
+/* ── Agent Team System ─────────────────────────── */
+
+/** Оружие агента — MCP-сервер, промпт-инструкция или community-скилл */
+export interface Weapon {
+  id: string;
+  name: string;
+  type: "mcp" | "prompt" | "skill";
+  /** Для MCP: команда запуска. Для prompt: инструкция. Для skill: путь в репо */
+  payload: string;
+  /** Краткое описание — что даёт это оружие */
+  description: string;
+  /** Для skill: полный контент SKILL.md (загружается runtime) */
+  skillContent?: string;
+}
+
+/** Подагент — помощник основного агента */
+export interface SubAgent {
+  role: string;
+  specialization: string;
+  weapons: Weapon[];
+  /** Конкретная задача, которую выполняет подагент */
+  task: string;
+}
+
+/** Агент в команде — имеет роль, оружие и двух подагентов */
+export interface Agent {
+  role: string;
+  /** Человекочитаемое описание: что делает этот агент */
+  description: string;
+  weapons: Weapon[];
+  subAgents: [SubAgent, SubAgent];
+  /** Приоритет задач: чем выше, тем раньше запускается (parallel swarm) */
+  priority: number;
+}
+
+/** Lead Agent — принимает решения и координирует команду */
+export interface LeadAgent {
+  role: "lead";
+  description: string;
+  weapons: Weapon[];
+  /** Стратегия координации */
+  strategy: string;
+}
+
+/** Размеры команды */
+export type TeamTier = "squad" | "platoon" | "company" | "battalion";
+
+/** Конфигурация тира */
+export interface TeamTierConfig {
+  id: TeamTier;
+  name: string;
+  totalAgents: number;
+  /** Количество основных агентов (без lead и без sub-agents) */
+  coreAgents: number;
+  /** Примерный расход токенов */
+  estimatedTokens: string;
+  /** Описание для пользователя */
+  description: string;
+}
+
+/** Полная команда агентов */
+export interface AgentTeam {
+  projectDescription: string;
+  tier: TeamTierConfig;
+  lead: LeadAgent;
+  agents: Agent[];
+  /** Общее число агентов: 1 lead + agents + sub-agents */
+  totalCount: number;
+  generatedAt: string;
+}
