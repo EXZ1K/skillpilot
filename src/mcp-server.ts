@@ -2040,7 +2040,7 @@ server.registerTool(
     if (estimate.roleSkills.length > 0) {
       lines.push("");
       lines.push("## Community Skills per Role");
-      lines.push("Each agent will be armed with real skills from [antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills) (1,340+ skills):");
+      lines.push("Each agent is armed with skills from **7 sources** (A=official, B=verified, C=community):");
       lines.push("");
       for (const rs of estimate.roleSkills) {
         lines.push(`**${rs.role}:**`);
@@ -2088,7 +2088,8 @@ server.registerTool(
       "- N Core Agents (each with a role: backend, frontend, security...)\n" +
       "- 2 Sub-Agents per Core Agent (specialized helpers)\n" +
       "- Each agent is armed with MCP servers (🔫), expert prompts (📜), and community skills (⚔️)\n" +
-      "- Community skills are loaded at runtime from github.com/sickn33/antigravity-awesome-skills\n\n" +
+      "- Skills from 7 sources: Anthropic Official, GitHub Copilot, Awesome CursorRules, steipete, alirezarezvani, Jeffallan, instructa, Antigravity\n" +
+      "- Quality tiers: [A] official/top-practitioner, [B] verified, [C] community\n\n" +
       "Mode: Parallel Swarm — all agents launch simultaneously.\n" +
       "Lead collects results and resolves integration conflicts.",
     inputSchema: z.object({

@@ -24,7 +24,7 @@ import type {
 } from "../types.js";
 import { matchCategories } from "../skills/matcher.js";
 import { matchRoles, AGENT_ROLES, WEAPONS, type RoleDef } from "./roles.js";
-import { getSkillsForRole, type SkillEntry } from "./skills-index.js";
+import { getSkillsForRole, getSkillSource, getActiveSources, type SkillEntry } from "./skills-index.js";
 import { fetchSkillsBatch } from "./skill-fetcher.js";
 
 /* ── Tier Configs ──────────────────────────────── */
@@ -67,12 +67,13 @@ export const TEAM_TIERS: Record<TeamTier, TeamTierConfig> = {
 /* ── Skill → Weapon converter ──────────────────── */
 
 function skillToWeapon(skill: SkillEntry, content?: string): Weapon {
+  const source = getSkillSource(skill);
   return {
     id: `skill-${skill.id}`,
-    name: skill.name,
+    name: `${skill.name} [${skill.quality}]`,
     type: "skill",
     payload: skill.path,
-    description: skill.description,
+    description: `${skill.description} (from ${source.name}, ${source.stars}★)`,
     skillContent: content,
   };
 }
@@ -230,7 +231,10 @@ export function estimateTeam(projectDescription: string): {
 
   const roleSkills = roles.map((r) => ({
     role: r.name,
-    skills: getSkillsForRole(r.id).map((s) => `${s.name} — ${s.description.slice(0, 80)}`),
+    skills: getSkillsForRole(r.id).map((s) => {
+      const source = getSkillSource(s);
+      return `[${s.quality}] ${s.name} — ${s.description.slice(0, 60)} (${source.name})`;
+    }),
   }));
 
   return {
@@ -251,7 +255,11 @@ export function formatTeam(team: AgentTeam): string {
   lines.push("");
   lines.push(`**Tier:** ${team.tier.name} | **Agents:** ${team.totalCount} | **Budget:** ${team.tier.estimatedTokens}`);
   lines.push(`**Mode:** Parallel Swarm — all agents work simultaneously`);
-  lines.push(`**Skills:** Community-powered from [antigravity-awesome-skills](https://github.com/sickn33/antigravity-awesome-skills)`);
+
+  // Source attribution
+  const sources = getActiveSources();
+  const sourceList = sources.map((s) => `[${s.name}](https://github.com/${s.repo}) (${s.stars}★)`).join(" · ");
+  lines.push(`**Skill Sources:** ${sourceList}`);
   lines.push("");
 
   // Lead
