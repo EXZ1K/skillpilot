@@ -6,16 +6,39 @@ SkillPilot is an MCP (Model Context Protocol) server that turns a single project
 
 ## What it does
 
-1. **You describe your project** — "car rental service in Tbilisi with a business plan"
+1. **You describe your project** — "veterinary clinic website with booking and payments"
 2. **SkillPilot returns a complete plan:**
    - MCP agents to install (from 60+ curated catalog + 37K on GitHub)
    - Ready-to-use AI skills with full instructions (auth, payments, database, design, security...)
-   - **Business Analyst & Strategy Consultant** agents for financial modeling and market research
    - Open source projects to reference or fork
    - All API keys needed with direct links
    - Step-by-step roadmap for your IDE agent
 
 3. **One command installs everything** — `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md`
+
+## Agent Team System — parallel swarm with 14 roles
+
+Describe your project and get a full team of specialized AI agents:
+
+```
+"Use skillpilot_team for an online marketplace with payments and AI search"
+```
+
+SkillPilot assembles a team from **14 agent roles**, each with 2 sub-agents and community skills as weapons:
+
+| Priority | Roles | Focus |
+|----------|-------|-------|
+| 1 — Foundation | Backend Architect, Auth & Security Lead | Server, API, database, auth |
+| 2 — Business Logic | Frontend, Payments, AI/ML, Communications, **Business Analyst, Strategy Consultant** | UI, billing, AI, email, business planning |
+| 3 — Quality | QA Lead, Code Review Lead, Performance Engineer | Testing, review, optimization |
+| 4 — Launch | DevOps, Analytics, Content & CMS, Project Coordinator | Deploy, metrics, content, PM |
+
+Each agent is armed with:
+- **MCP weapons** — real MCP servers (Supabase, Stripe, Vercel, Firecrawl...)
+- **Prompt weapons** — expert instructions (System Architect, Security Expert, QA Engineer...)
+- **Skill weapons** — community skills fetched from 8 GitHub sources (2,300+ skills)
+
+Team sizes: **Squad** (8 agents) → **Platoon** (16) → **Company** (24) → **Battalion** (28)
 
 ## ⚔️ Battle Mode — adversarial evaluation
 
@@ -38,40 +61,19 @@ Each team proposes a full stack with agents and skills. Your AI then:
 4. Asks you to confirm
 5. Implements only the winning plan
 
-This produces higher quality results through adversarial evaluation — instead of one opinion, you get a competition of ideas.
+## NEW: Business planning agents
 
-## Business Intelligence — real market research, not guesswork
-
-SkillPilot now includes **Business Analyst** and **Strategy Consultant** agents that build data-driven business plans:
+v0.5.0 adds **Business Analyst** and **Strategy Consultant** roles. When your project description mentions business plan, investment, ROI, or similar keywords — these agents join the team automatically.
 
 ```
-"Use skillpilot_plan for a car rental service in Batumi, Georgia with business plan"
+"Use skillpilot_team for a car rental service in Batumi, Georgia with business plan"
 ```
 
-### What the agents deliver
+**Business Analyst** builds financial models: P&L projections, NPV/IRR, break-even, unit economics, depreciation, cash flow. **Strategy Consultant** analyzes the market: Porter's Five Forces, PEST, SWOT, customer segmentation, go-to-market.
 
-| Agent | What it does |
-|-------|-------------|
-| **Business Analyst** | P&L projections, NPV/IRR, break-even, unit economics, depreciation, cash flow |
-| **Strategy Consultant** | Porter's Five Forces, PEST, SWOT, customer segmentation, go-to-market |
-| **Financial Modeler** (sub-agent) | Monthly financial models with 3 scenarios (optimistic/base/pessimistic) |
-| **Market Researcher** (sub-agent) | TAM/SAM/SOM, competitor pricing, industry benchmarks |
-| **Competitive Analyst** (sub-agent) | Real competitor data from web scraping, market positioning |
-| **Growth Strategist** (sub-agent) | Customer segments, acquisition channels, growth vectors |
+Both agents use **Firecrawl** (web scraping) to research the actual market before building models — every number must cite a source or explain the assumption.
 
-### Key: research first, model second
-
-Business agents use **Firecrawl** (web scraping MCP) to research the actual market before building any financial model. Every number in the business plan must cite a source or explain the assumption. No blind guessing.
-
-### 50 business skills from 8 sources
-
-Powered by [linuszz/business-strategy-planning-skills](https://github.com/linuszz/business-strategy-planning-skills) — 50 SKILL.md files covering:
-
-- **Financial Analysis** (15): free cash flow, market sizing, DuPont analysis, forecasting, sensitivity analysis...
-- **Business Modeling** (8): SWOT, RACI, business definition, strategy articulation...
-- **Strategy Design** (13): Porter's Five Forces, PEST, customer segmentation, value chain...
-- **Strategic Decisions** (6): risk matrix, scenario development, growth-share matrix...
-- **Visualization** (8): executive dashboards, marimekko charts, traffic lights...
+Powered by 50 business SKILL.md files from [linuszz/business-strategy-planning-skills](https://github.com/linuszz/business-strategy-planning-skills).
 
 ## How it works
 
@@ -143,6 +145,8 @@ For battle mode:
 | Tool | Description |
 |------|-------------|
 | `skillpilot_plan` | **Main tool.** One request → complete plan with agents, skills, projects, API keys, roadmap. Supports `mode: "battle"` for adversarial evaluation. |
+| `skillpilot_team` | Create full agent team with weapons and community skills |
+| `skillpilot_team_estimate` | Preview team size, roles, and skills before committing |
 | `skillpilot_catalog` | Browse 60+ curated MCP agents across 24 categories |
 | `skillpilot_install` | Generate `.mcp.json`, `.env.example`, `.cursorrules`, `CLAUDE.md`, `ROADMAP.md` |
 | `skillpilot_explain` | Detailed info about any agent or category |
@@ -150,13 +154,42 @@ For battle mode:
 | `skillpilot_skills` | Find AI skills: universal prompts, IDE-specific, domain expert |
 | `skillpilot_projects` | Find open source projects to fork or reference |
 
-## 27 Agent Categories
+## 14 Agent Roles
 
-auth, payments, database, ai, email, deploy, review, security, video, storage, analytics, monitoring, cms, search, cache, notifications, testing, communication, project-management, documents, browser, marketing, design, docs, **business-plan, financial-analysis, market-research**
+| Role | Weapons | Skills |
+|------|---------|--------|
+| Backend Architect | Supabase, Neon, System Architect, API Designer | Claude API, Node.js/Express, Hono, API Design |
+| Auth & Security Lead | Clerk, Semgrep, Security Expert | Supabase Auth, Better Auth, Security Audit, 007 |
+| Frontend Architect | Figma, Frontend Architect, UI/UX Expert | Next.js/React, shadcn/ui, WCAG Audit |
+| Payments Engineer | Stripe, Security Expert | Stripe Agent, Fintech Compliance, Billing |
+| AI/ML Engineer | Context7, System Architect | MCP Builder, Prompt Engineering, AI Toolkit |
+| Communications Engineer | Resend, Slack | Email Automation, Klaviyo, Marketing |
+| **Business Analyst** | Firecrawl, Business Analyst, System Architect | Market Sizing, Free Cash Flow, SWOT, Forecasting |
+| **Strategy Consultant** | Firecrawl, PostHog, Strategy Consultant | Porter's Five Forces, PEST, Customer Segmentation |
+| QA Lead | Playwright, QA Engineer | Webapp Testing, E2E Testing |
+| Code Review Lead | GitHub, Code Reviewer | Code Review Expert, Clean Code |
+| Performance Engineer | Upstash, Sentry, Performance Engineer | DevOps Troubleshooter, Cost Optimizer |
+| DevOps Lead | Vercel, Cloudflare, DevOps Engineer | Docker, Deployment Engineer, Pipeline Architect |
+| Analytics Engineer | PostHog, Data Engineer | Data Analyst, A/B Tests, dbt |
+| Content & CMS | Sanity, Firecrawl | Doc Co-Authoring, Content Strategy, Growth Engine |
 
-## Built-in Skills
+## 8 Skill Sources (2,300+ community skills)
 
-21 curated skills with ready-to-use instructions across all categories:
+| Tier | Source | Skills |
+|------|--------|--------|
+| A | [Anthropic Official](https://github.com/anthropics/skills) | 17 |
+| A | [GitHub Copilot](https://github.com/github/awesome-copilot) | 362 |
+| A | [Awesome CursorRules](https://github.com/PatrickJS/awesome-cursorrules) | 178 |
+| A | [Peter Steinberger Rules](https://github.com/steipete/agent-rules) | 15 |
+| B | [Claude Skills Multi-Platform](https://github.com/alirezarezvani/claude-skills) | 278 |
+| B | [Workflow Skills](https://github.com/Jeffallan/claude-skills) | 66 |
+| B | [Framework Prompts](https://github.com/instructa/ai-prompts) | 97 |
+| B | [Business Strategy Planning](https://github.com/linuszz/business-strategy-planning-skills) | 50 |
+| C | [Antigravity Skills](https://github.com/sickn33/antigravity-awesome-skills) | 1,340 |
+
+## 21 Built-in Skills
+
+Ready-to-use instructions across all categories:
 
 - **Auth** — providers, sessions, protected routes, OAuth, roles
 - **Database** — schema design, naming, indexes, migrations, RLS
@@ -166,21 +199,16 @@ auth, payments, database, ai, email, deploy, review, security, video, storage, a
 - **Marketing** — SEO, meta tags, landing page structure, schema.org
 - **Deploy** — CI/CD pipeline, env vars, preview deployments, checklist
 - **Security** — OWASP top 10, input validation, SQL injection, secrets
-- **Business Plan** — TAM/SAM/SOM, unit economics, P&L projections, NPV/IRR, break-even, depreciation
-- **Market Research** — competitive intelligence, customer segmentation, industry analysis frameworks
+- **Business Plan** — TAM/SAM/SOM, unit economics, P&L projections, NPV/IRR, break-even
+- **Market Research** — competitive intelligence, customer segmentation, industry analysis
 - **And more:** email, analytics, monitoring, testing, cache, search, CMS, video, storage, notifications
-
-Skills are universal — they describe patterns and principles, not vendor-specific code. Your AI picks the right tools for your stack.
-
-## How Skills Save Tokens
-
-Without skills, your AI spends thousands of tokens figuring out how to implement auth, structure a database, or set up payments. With SkillPilot skills, it follows proven instructions — faster, cheaper, better.
 
 ## Smart Features
 
-- **Business Intelligence** — Business Analyst & Strategy Consultant agents with real market research via web scraping
+- **Agent Team System** — parallel swarm of specialized agents with sub-agents and community skills
 - **Battle Mode** — 3 competing strategies evaluated by your AI for higher quality plans
-- **8 skill sources** — 2,300+ community skills from Anthropic, GitHub Copilot, CursorRules, and 5 more providers
+- **8 skill sources** — 2,300+ community skills from Anthropic, GitHub Copilot, CursorRules, and more
+- **Business planning** — financial modeling and market research agents with real web scraping
 - **LLM-driven categories** — Your IDE's AI picks the right categories, no keyword guessing
 - **Stack enrichment** — Redis in your stack? Cache skill auto-included. Python + FastAPI? AI skill added.
 - **GitHub discovery** — Finds relevant MCP servers, skills, and projects beyond the built-in catalog
