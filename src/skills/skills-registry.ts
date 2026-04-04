@@ -708,143 +708,139 @@ export const CURATED_SKILLS: CuratedSkill[] = [
   {
     id: "business-plan-creation",
     name: "Business Plan & Financial Model",
-    description: "Complete business plan: market analysis, financial model, unit economics, ROI, break-even",
+    description: "Concrete business plan with real competitor data, sourced costs, and P&L tables",
     category: "business-plan",
     tags: ["business", "plan", "financial", "model", "roi", "investment", "startup", "market", "analysis", "forecast", "unit economics"],
-    instruction: `## Business Plan & Financial Model
+    instruction: `## Business Plan — Output Requirements
 
-### Step 1: Executive Summary
-- One-paragraph business concept (what, for whom, why now)
-- Revenue model (how money comes in)
-- Target market and initial geography
-- Key competitive advantage (moat)
-- Funding ask and use of funds (if applicable)
+You MUST produce ALL of the following sections with REAL DATA. Do not skip any section.
+Do not give generic advice — every section must contain specific numbers, names, URLs, or calculations.
 
-### Step 2: Market Analysis
-- **TAM** (Total Addressable Market): entire market globally
-- **SAM** (Serviceable Addressable Market): the segment you CAN reach
-- **SOM** (Serviceable Obtainable Market): realistic first-year capture
-- Use top-down AND bottom-up estimation, then triangulate
-- Cite sources for market data (industry reports, government statistics)
+### 1. COMPETITOR TABLE (mandatory)
+Use web scraping to find 5-10 real businesses doing the same thing.
+Output as a table:
 
-### Step 3: Competitive Analysis
-- List 5-10 direct and indirect competitors
-- Map on Price vs Quality matrix
-- Identify gaps: what do competitors NOT do well?
-- Your positioning: how you are different AND better
-- Barriers to entry (regulatory, capital, technology, network effects)
+| # | Name | URL | Location | Price Range | What They Offer | Weakness |
+|---|------|-----|----------|-------------|-----------------|----------|
+| 1 | ...  | ... | ...      | $X - $Y     | ...             | ...      |
 
-### Step 4: Unit Economics
-- **Customer Acquisition Cost (CAC)**: total marketing spend / new customers
-- **Lifetime Value (LTV)**: avg revenue per customer × avg customer lifetime
-- **LTV/CAC ratio**: must be > 3x for sustainable business
-- **Payback period**: months to recover CAC
-- **Gross margin**: (revenue - COGS) / revenue
-- **Contribution margin**: revenue - variable costs per unit
+If it's a physical business: also check Google Maps, marketplace listings, social media.
+If it's cross-border: find competitors in BOTH origin and destination markets.
 
-### Step 5: Financial Model (3-5 Year Projection)
+### 2. REGULATIONS & REQUIREMENTS (mandatory for any physical/regulated business)
+Research what is legally required. Find the official government sources.
+Output as a checklist:
 
-#### Revenue Model
-- Price × Volume for each revenue stream
-- Growth rate assumptions (conservative, base, optimistic)
-- Seasonality adjustments if applicable
+- [ ] Requirement 1 — where to get it, cost, timeline (source: URL)
+- [ ] Requirement 2 — ...
 
-#### Cost Structure
-- **Fixed costs**: rent, salaries, insurance, licenses, software
-- **Variable costs**: materials, commissions, payment processing fees
-- **CapEx**: equipment, vehicles, technology (with depreciation schedule)
-- **Working capital**: inventory, accounts receivable/payable
+Include: licenses, permits, certifications, insurance, customs, import/export rules.
+If cross-border: requirements for BOTH countries.
 
-#### P&L Projection Template
-\`\`\`
-                    Year 1    Year 2    Year 3    Year 4    Year 5
-Revenue             $___      $___      $___      $___      $___
-- COGS              $___      $___      $___      $___      $___
-= Gross Profit      $___      $___      $___      $___      $___
-- Operating Expenses $___     $___      $___      $___      $___
-= EBITDA            $___      $___      $___      $___      $___
-- Depreciation      $___      $___      $___      $___      $___
-= EBIT              $___      $___      $___      $___      $___
-- Taxes             $___      $___      $___      $___      $___
-= Net Profit        $___      $___      $___      $___      $___
-\`\`\`
+### 3. COST BREAKDOWN TABLE (mandatory)
+Every cost must be a specific number with a source or calculation.
 
-### Step 6: Investment Analysis
-- **Initial investment** needed (CapEx + working capital + launch costs)
-- **NPV** (Net Present Value) at 10-15% discount rate
-- **IRR** (Internal Rate of Return) — must exceed cost of capital
-- **Payback period** — when cumulative cash flow turns positive
-- **Break-even point** — monthly revenue needed to cover all costs
+| Category | Item | Amount | Frequency | Source |
+|----------|------|--------|-----------|--------|
+| Startup  | ...  | $X     | One-time  | URL/calculation |
+| Monthly  | ...  | $X     | Monthly   | URL/calculation |
+| Per-unit | ...  | $X     | Per sale  | URL/calculation |
 
-### Step 7: Risk Analysis
-- List top 5 risks with probability and impact
-- Mitigation strategy for each risk
-- Sensitivity analysis: what if price drops 20%? What if demand is 50% lower?
-- Best case / Base case / Worst case scenarios
+Include: product/inventory costs, logistics/shipping, marketing, software, rent, salaries, insurance, licenses, payment processing fees.
+For physical goods: packaging, shipping, customs, broker fees.
 
-### Step 8: Depreciation & Asset Management
-- Straight-line depreciation for vehicles, equipment, technology
-- Formula: (Purchase Price - Salvage Value) / Useful Life
-- Include replacement schedule in CapEx projections
-- Track asset utilization rates
+### 4. PRICING & REVENUE MODEL (mandatory)
+Based on competitor data from section 1:
 
-### Step 9: MANDATORY Market Research (Before Any Numbers!)
-- NEVER build a financial model without researching the market first
-- Use web scraping tools to gather REAL competitor prices from their websites
-- Search for industry reports (Statista, IBISWorld, government data portals)
-- Find average prices, occupancy rates, utilization rates for the specific industry
-- Research the target geography: local regulations, tax rates, average wages
-- Collect at least 5 competitor data points for pricing validation
-- Check Google Maps / TripAdvisor / booking platforms for real market data
-- Every assumption in the model must cite a source or explain the research behind it
+- Recommended price: $X (rationale: competitors charge $Y-$Z, your advantage is ...)
+- Revenue = Price x Volume
+- 3 scenarios:
+  - Pessimistic: X sales/month at $Y = $Z/month
+  - Base: ...
+  - Optimistic: ...
 
-### Key Rules
-- NEVER guess numbers — research them. Use web tools to find real market data
-- ALWAYS state your assumptions explicitly — every number needs a source or rationale
-- Use conservative estimates for revenue, aggressive for costs
-- Include monthly granularity for Year 1, quarterly for Year 2-3, annual for Year 4-5
-- Build 3 scenarios: optimistic (+20%), base, pessimistic (-30%)
-- Calculate ALL metrics: ROI, NPV, IRR, payback, break-even, LTV/CAC
-- Compare with industry benchmarks where available
-- Cross-reference your model with at least 3 comparable businesses`,
+### 5. P&L TABLE (mandatory)
+Fill in ALL cells with numbers. Year 1 monthly, Years 2-3 quarterly.
+
+| | M1 | M2 | M3 | M4 | M5 | M6 | M7 | M8 | M9 | M10 | M11 | M12 | Y2 | Y3 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Revenue | | | | | | | | | | | | | | |
+| - COGS | | | | | | | | | | | | | | |
+| = Gross Profit | | | | | | | | | | | | | | |
+| - OpEx | | | | | | | | | | | | | | |
+| = Net Profit | | | | | | | | | | | | | | |
+
+### 6. INVESTMENT SUMMARY (mandatory)
+- Total startup investment needed: $X
+- Monthly burn rate: $X
+- Break-even month: month N
+- ROI at 12 months: X%
+- ROI at 24 months: X%
+
+### 7. TOP 5 RISKS (mandatory)
+
+| Risk | Probability | Impact | Mitigation |
+|------|------------|--------|------------|
+| ... | High/Med/Low | $X or description | Specific action |
+
+### Rules
+- NEVER output a section without data. If you can't find data, say what you searched and give a range estimate.
+- NEVER say "research your market" — YOU are the researcher.
+- Physical operations (logistics, regulations, customs) come BEFORE the website.
+- The website is ONE line in the cost table, not the whole plan.`,
   },
 
   // ═══ MARKET RESEARCH ═══
   {
     id: "market-research",
     name: "Market Research & Competitive Intelligence",
-    description: "Market sizing, competitive landscape, customer segments, industry analysis",
+    description: "Find real competitors, scrape prices, research regulations, map channels",
     category: "market-research",
     tags: ["market", "research", "competitive", "intelligence", "tam", "sam", "som", "segment"],
-    instruction: `## Market Research & Competitive Intelligence
+    instruction: `## Market Research — Output Requirements
 
-### Market Sizing (TAM/SAM/SOM)
-- **Top-down**: Start with total market → subtract irrelevant segments
-- **Bottom-up**: Count potential customers × average spend
-- **Triangulate**: Cross-reference both methods with industry reports
+You MUST produce ALL sections with REAL DATA from web research. No generic frameworks without data.
 
-### Competitive Landscape
-- Identify 5-10 competitors (direct + indirect + potential)
-- Analyze: pricing, features, market share, strengths, weaknesses
-- Map competitive positioning (price vs value matrix)
-- Identify unserved niches and market gaps
+### 1. COMPETITOR MAP (use web scraping)
+Find 5-10 real competitors. For each, scrape their website and produce:
 
-### Customer Research
-- Define 2-3 ideal customer personas with demographics + psychographics
-- Map customer journey: awareness → consideration → purchase → retention
-- Identify pain points and willingness to pay
-- Estimate customer acquisition channels and costs
+| Name | URL | Price | Location | Unique Selling Point | Weakness | Customer Reviews Summary |
 
-### Industry Analysis Frameworks
-- **PEST**: Political, Economic, Social, Technological factors
-- **Porter's Five Forces**: supplier power, buyer power, substitutes, new entrants, rivalry
-- **Value Chain**: where value is created and captured in the industry
+Search on: Google, marketplaces (Amazon, Etsy, local equivalents), social media, industry directories.
+For local businesses: check Google Maps, Yelp, TripAdvisor, local classifieds.
 
-### Key Rules
-- Use primary AND secondary research (interviews + data)
-- Cite sources: government data, industry reports, competitor filings
-- Quantify everything — "large market" is not useful, "$2.4B market growing 12% CAGR" is
-- Update research quarterly — markets change fast`,
+### 2. CUSTOMER PROFILE (from real data)
+Research where actual customers discuss this product/service:
+- Forums, Reddit, Facebook groups, review sites
+- What do they complain about? What do they praise? What's missing?
+- How much do they actually pay? (from reviews and listings, not theory)
+
+Output: 2-3 specific customer types with demographics, budget, and where they search.
+
+### 3. MARKET SIZE (with math)
+- Top-down: total market from industry report (cite source + URL) → your segment
+- Bottom-up: number of potential customers in target geography × average spend
+- Your realistic Year 1 target: X customers × $Y = $Z
+
+### 4. CHANNEL MAP (specific platforms)
+Where exactly to reach these customers:
+
+| Channel | Platform | Why | Estimated Reach | Cost | Action |
+|---------|----------|-----|----------------|------|--------|
+| Social | Instagram @specific_hashtag | 50K posts | Free + $X/mo ads | Post 3x/week |
+| Marketplace | specific_site.com | 10K listings | $X listing fee | List 5 items |
+| Community | facebook.com/groups/specific | 20K members | Free | Engage daily |
+
+### 5. REGULATIONS (if applicable)
+Find actual government/official requirements:
+- What licenses/permits are needed? Link to official page.
+- What certifications? Cost and timeline.
+- Cross-border: customs, import permits, documentation.
+
+### Rules
+- Every finding must include how you found it (URL, search query, platform).
+- "Large and growing market" is NOT research. "$2.4B growing 12% CAGR (source: Statista 2024)" IS research.
+- If the business is physical/regulated, regulations section is MORE important than market size.`,
   },
 ];
 

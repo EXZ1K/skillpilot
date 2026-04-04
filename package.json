@@ -1,6 +1,6 @@
 {
   "name": "@exz1k/skill-pilot",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Describe your project → get a full AI agent team with skills discovered from GitHub",
   "type": "module",
   "bin": {
