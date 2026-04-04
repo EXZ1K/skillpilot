@@ -189,47 +189,67 @@ const KEYWORD_TO_CATEGORIES: Record<string, string[]> = {
   player: ["auth", "database"],
   score: ["database"],
 
-  // Business Planning & Financial Analysis
-  "business plan": ["business-plan", "financial-analysis", "market-research", "strategy"],
-  "businessplan": ["business-plan", "financial-analysis", "market-research", "strategy"],
-  "бизнес план": ["business-plan", "financial-analysis", "market-research", "strategy"],
-  "бизнесплан": ["business-plan", "financial-analysis", "market-research", "strategy"],
-  roi: ["business-plan", "financial-analysis"],
-  investment: ["business-plan", "financial-analysis"],
-  amortization: ["business-plan", "financial-analysis"],
-  depreciation: ["business-plan", "financial-analysis"],
-  breakeven: ["business-plan", "financial-analysis"],
-  "break even": ["business-plan", "financial-analysis"],
-  profitability: ["business-plan", "financial-analysis"],
+  // ═══ Business Planning — broad triggers ═══
+  // The agent itself figures out industry specifics via research.
+  // We only need enough keywords to activate the business roles.
+
+  // EN: core business words
+  business: ["business-plan", "financial-analysis", "market-research", "strategy", "marketing", "auth", "database", "design", "deploy"],
+  sell: ["business-plan", "payments", "marketing"],
+  selling: ["business-plan", "payments", "marketing"],
+  sales: ["business-plan", "payments", "marketing"],
+  profit: ["business-plan", "financial-analysis"],
   revenue: ["business-plan", "financial-analysis"],
-  forecast: ["business-plan", "financial-analysis"],
-  "unit economics": ["business-plan", "financial-analysis"],
-  npv: ["business-plan", "financial-analysis"],
-  irr: ["business-plan", "financial-analysis"],
-  cashflow: ["business-plan", "financial-analysis"],
-  "cash flow": ["business-plan", "financial-analysis"],
-  financial: ["business-plan", "financial-analysis"],
-  "market analysis": ["market-research", "strategy"],
-  "market research": ["market-research", "strategy"],
-  "market entry": ["market-research", "strategy"],
+  investment: ["business-plan", "financial-analysis"],
+  roi: ["business-plan", "financial-analysis"],
+  margin: ["business-plan", "financial-analysis"],
+  export: ["business-plan", "strategy", "market-research"],
+  import: ["business-plan", "strategy"],
+  logistics: ["business-plan", "strategy"],
+  shipping: ["business-plan", "strategy"],
+  customs: ["business-plan", "strategy"],
+  franchise: ["business-plan", "strategy"],
+  scaling: ["business-plan", "strategy"],
+  strategy: ["strategy"],
   competitive: ["strategy", "market-research"],
   competitor: ["strategy", "market-research"],
   competitors: ["strategy", "market-research"],
-  swot: ["strategy", "business-plan"],
-  strategy: ["strategy"],
-  tam: ["market-research", "business-plan"],
-  "go to market": ["strategy", "market-research"],
   rental: ["business-plan", "payments", "auth", "database", "design", "deploy"],
   rent: ["business-plan", "payments", "auth", "database"],
-  lease: ["business-plan", "payments", "database"],
-  fleet: ["business-plan", "database"],
-  car: ["business-plan", "database"],
-  vehicle: ["business-plan", "database"],
   hotel: ["business-plan", "payments", "auth", "database", "design", "deploy"],
-  tourism: ["business-plan", "payments", "auth", "database", "design", "deploy"],
-  realestate: ["business-plan", "payments", "auth", "database"],
-  franchise: ["business-plan", "strategy"],
-  "real estate": ["business-plan", "payments", "auth", "database"],
+
+  // RU: core business words — broad triggers
+  "бизнес": ["business-plan", "financial-analysis", "market-research", "strategy", "marketing", "auth", "database", "design", "deploy"],
+  "продажа": ["business-plan", "payments", "marketing"],
+  "продавать": ["business-plan", "payments", "marketing"],
+  "продажи": ["business-plan", "payments", "marketing"],
+  "продаж": ["business-plan", "payments", "marketing"],
+  "прибыль": ["business-plan", "financial-analysis"],
+  "доход": ["business-plan", "financial-analysis"],
+  "выручка": ["business-plan", "financial-analysis"],
+  "вложения": ["business-plan", "financial-analysis"],
+  "инвестиции": ["business-plan", "financial-analysis"],
+  "окупаемость": ["business-plan", "financial-analysis"],
+  "рентабельность": ["business-plan", "financial-analysis"],
+  "амортизация": ["business-plan", "financial-analysis"],
+  "маржа": ["business-plan", "financial-analysis"],
+  "выхлоп": ["business-plan", "financial-analysis"],
+  "масштабирование": ["business-plan", "strategy"],
+  "масштабировать": ["business-plan", "strategy"],
+  "план": ["business-plan"],
+  "экспорт": ["business-plan", "strategy", "market-research"],
+  "импорт": ["business-plan", "strategy"],
+  "логистика": ["business-plan", "strategy"],
+  "доставка": ["business-plan", "strategy"],
+  "таможня": ["business-plan", "strategy"],
+  "перевозка": ["business-plan", "strategy"],
+  "лицензия": ["business-plan", "strategy"],
+  "рынок": ["market-research", "strategy"],
+  "конкуренты": ["strategy", "market-research"],
+  "стратегия": ["strategy"],
+  "клиенты": ["business-plan", "market-research"],
+  "аренда": ["business-plan", "payments", "auth", "database", "design", "deploy"],
+  "прокат": ["business-plan", "payments", "auth", "database", "design", "deploy"],
 
   // Marketing / SEO
   marketing: ["marketing"],
@@ -240,10 +260,9 @@ const KEYWORD_TO_CATEGORIES: Record<string, string[]> = {
   copywriting: ["marketing"],
   meta: ["marketing"],
   leads: ["marketing", "email"],
-  business: ["business-plan", "financial-analysis", "market-research", "strategy", "marketing", "auth", "database", "design", "deploy"],
-  clinic: ["marketing", "auth", "database", "design", "deploy", "payments"],
-  restaurant: ["marketing", "auth", "database", "design", "deploy", "payments"],
-  salon: ["marketing", "auth", "database", "design", "deploy", "payments"],
+  clinic: ["business-plan", "marketing", "auth", "database", "design", "deploy", "payments"],
+  restaurant: ["business-plan", "marketing", "auth", "database", "design", "deploy", "payments"],
+  salon: ["business-plan", "marketing", "auth", "database", "design", "deploy", "payments"],
   agency: ["marketing", "auth", "database", "design", "deploy"],
 
   // Design / UI
@@ -306,9 +325,9 @@ const KEYWORD_TO_CATEGORIES: Record<string, string[]> = {
 
   // Составные типы проектов
   saas: ["auth", "payments", "database", "analytics", "monitoring", "design"],
-  ecommerce: ["auth", "payments", "database", "email", "search", "analytics", "design"],
-  shop: ["auth", "payments", "database", "search", "design"],
-  marketplace: ["auth", "payments", "database", "email", "search", "notifications", "design"],
+  ecommerce: ["business-plan", "auth", "payments", "database", "email", "search", "analytics", "design"],
+  shop: ["business-plan", "auth", "payments", "database", "search", "design"],
+  marketplace: ["business-plan", "auth", "payments", "database", "email", "search", "notifications", "design"],
   dashboard: ["auth", "database", "analytics", "design"],
   crm: ["auth", "database", "email", "search", "communication"],
   website: ["auth", "database", "design", "deploy", "marketing"],
@@ -317,8 +336,8 @@ const KEYWORD_TO_CATEGORIES: Record<string, string[]> = {
   api: ["database", "deploy", "monitoring"],
   platform: ["auth", "payments", "database", "email", "analytics", "monitoring", "project-management"],
   app: ["auth", "database"],
-  b2b: ["auth", "payments", "database", "email", "analytics"],
-  b2c: ["auth", "payments", "database", "email", "notifications"],
+  b2b: ["business-plan", "auth", "payments", "database", "email", "analytics"],
+  b2c: ["business-plan", "auth", "payments", "database", "email", "notifications"],
   startup: ["business-plan", "financial-analysis", "strategy", "auth", "payments", "database", "email", "analytics", "deploy"],
 };
 
@@ -332,8 +351,20 @@ export function matchCategories(projectDescription: string): string[] {
   const words = tokenize(projectDescription);
   const matched = new Set<string>(ALWAYS_INCLUDE);
 
+  // Match single words
   for (const word of words) {
     const categories = KEYWORD_TO_CATEGORIES[word];
+    if (categories) {
+      for (const cat of categories) {
+        matched.add(cat);
+      }
+    }
+  }
+
+  // Match bigrams (two consecutive words) for multi-word keywords
+  for (let i = 0; i < words.length - 1; i++) {
+    const bigram = `${words[i]} ${words[i + 1]}`;
+    const categories = KEYWORD_TO_CATEGORIES[bigram];
     if (categories) {
       for (const cat of categories) {
         matched.add(cat);
@@ -353,7 +384,7 @@ export function matchCategories(projectDescription: string): string[] {
 
 /**
  * Разбивает строку на нормализованные слова.
- * Поддерживает: английский, разделители, camelCase.
+ * Поддерживает: английский, русский, разделители, camelCase.
  */
 function tokenize(text: string): string[] {
   return text
