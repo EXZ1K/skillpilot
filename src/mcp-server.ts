@@ -1313,9 +1313,12 @@ server.registerTool(
           "This is much more reliable than keyword matching. " +
           "Available: auth, payments, database, ai, email, deploy, review, security, " +
           "video, storage, analytics, monitoring, cms, search, cache, notifications, " +
-          "testing, communication, project-management, documents, browser, marketing, design, docs. " +
+          "testing, communication, project-management, documents, browser, marketing, design, docs, " +
+          "business-plan, financial-analysis, market-research, strategy. " +
           "Always include: review, security, docs. " +
-          "Example for vet clinic: ['auth', 'payments', 'database', 'marketing', 'design', 'deploy', 'review', 'security', 'docs']",
+          "IMPORTANT: If the user mentions business, selling, profit, investment, scaling, market, " +
+          "or wants to START/RUN a business (not just build a website) — include 'business-plan' and 'market-research'. " +
+          "Example for car rental business: ['business-plan', 'market-research', 'strategy', 'auth', 'payments', 'database', 'marketing', 'design', 'deploy', 'review', 'security', 'docs']",
         ),
       techStack: z
         .string()
@@ -1668,7 +1671,47 @@ server.registerTool(
 
     let step = 1;
 
-    // Шаг 1 всегда: setup
+    // ─── Business Analysis step (BEFORE everything else) ───
+    const businessCategories = ["business-plan", "financial-analysis", "market-research", "strategy"];
+    const hasBusinessPlan = businessCategories.some((c) => matchedCategories.includes(c));
+    if (hasBusinessPlan) {
+      lines.push(`### Step ${step++}: Business Analysis (DO THIS FIRST)`);
+      lines.push("");
+      lines.push("**BEFORE writing any code, you MUST complete a full business analysis.**");
+      lines.push("Use web search and Firecrawl to research the actual market. Every number must have a source.");
+      lines.push("");
+      lines.push("**Required deliverables:**");
+      lines.push("");
+      lines.push("1. **Competitor Table** — use web scraping to find 5-10 real competitors:");
+      lines.push("   | Name | URL | Location | Price Range | Strengths | Weaknesses |");
+      lines.push("   |------|-----|----------|-------------|-----------|------------|");
+      lines.push("   Scrape actual websites, marketplaces, Google Maps, social media.");
+      lines.push("");
+      lines.push("2. **Regulations & Requirements** — find official government sources:");
+      lines.push("   - What licenses, permits, certifications are needed? (link to official page)");
+      lines.push("   - Cross-border: customs, import/export rules, required documents");
+      lines.push("   - Insurance, legal form, tax implications");
+      lines.push("");
+      lines.push("3. **Cost Breakdown** — every line item with a real number and source:");
+      lines.push("   | Category | Item | Amount | Frequency | Source |");
+      lines.push("   |----------|------|--------|-----------|--------|");
+      lines.push("   Include: product costs, logistics, marketing, software, rent, salaries, insurance, licenses.");
+      lines.push("");
+      lines.push("4. **Revenue Model** — price based on competitor data, volume based on market:");
+      lines.push("   - Pessimistic / Base / Optimistic scenarios with numbers");
+      lines.push("");
+      lines.push("5. **P&L Table** — filled with real numbers (Year 1 monthly, Years 2-3 quarterly)");
+      lines.push("");
+      lines.push("6. **Investment Summary** — startup cost, break-even month, ROI at 12/24 months");
+      lines.push("");
+      lines.push("7. **Top 5 Risks** with probability, impact, and specific mitigation");
+      lines.push("");
+      lines.push("**IMPORTANT:** Physical operations (logistics, regulations, supply chain) come BEFORE the website.");
+      lines.push("The website is ONE line in the cost table, not the whole plan.");
+      lines.push("");
+    }
+
+    // Шаг: setup
     lines.push(`### Step ${step++}: Project Setup`);
     lines.push("- Initialize project with your framework");
     if (stack) lines.push(`- Tech stack: ${stack}`);
