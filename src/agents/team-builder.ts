@@ -165,7 +165,7 @@ export async function buildTeam(
   const selectedRoles = matchedRoles.slice(0, tierConfig.coreAgents);
 
   // Если ролей не хватает — добавляем универсальные
-  const fallbackOrder = ["backend", "frontend", "qa", "devops", "reviewer", "performance", "pm", "analytics", "content"];
+  const fallbackOrder = ["backend", "frontend", "business-analyst", "strategy", "qa", "devops", "reviewer", "performance", "pm", "analytics", "content"];
   const usedIds = new Set(selectedRoles.map((r) => r.id));
 
   for (const fbId of fallbackOrder) {

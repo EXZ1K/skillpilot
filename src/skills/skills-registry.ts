@@ -703,6 +703,149 @@ export const CURATED_SKILLS: CuratedSkill[] = [
 - Test notification delivery in staging before production
 - Handle notification delivery failures gracefully — retry with exponential backoff`,
   },
+
+  // ═══ BUSINESS PLAN ═══
+  {
+    id: "business-plan-creation",
+    name: "Business Plan & Financial Model",
+    description: "Complete business plan: market analysis, financial model, unit economics, ROI, break-even",
+    category: "business-plan",
+    tags: ["business", "plan", "financial", "model", "roi", "investment", "startup", "market", "analysis", "forecast", "unit economics"],
+    instruction: `## Business Plan & Financial Model
+
+### Step 1: Executive Summary
+- One-paragraph business concept (what, for whom, why now)
+- Revenue model (how money comes in)
+- Target market and initial geography
+- Key competitive advantage (moat)
+- Funding ask and use of funds (if applicable)
+
+### Step 2: Market Analysis
+- **TAM** (Total Addressable Market): entire market globally
+- **SAM** (Serviceable Addressable Market): the segment you CAN reach
+- **SOM** (Serviceable Obtainable Market): realistic first-year capture
+- Use top-down AND bottom-up estimation, then triangulate
+- Cite sources for market data (industry reports, government statistics)
+
+### Step 3: Competitive Analysis
+- List 5-10 direct and indirect competitors
+- Map on Price vs Quality matrix
+- Identify gaps: what do competitors NOT do well?
+- Your positioning: how you are different AND better
+- Barriers to entry (regulatory, capital, technology, network effects)
+
+### Step 4: Unit Economics
+- **Customer Acquisition Cost (CAC)**: total marketing spend / new customers
+- **Lifetime Value (LTV)**: avg revenue per customer × avg customer lifetime
+- **LTV/CAC ratio**: must be > 3x for sustainable business
+- **Payback period**: months to recover CAC
+- **Gross margin**: (revenue - COGS) / revenue
+- **Contribution margin**: revenue - variable costs per unit
+
+### Step 5: Financial Model (3-5 Year Projection)
+
+#### Revenue Model
+- Price × Volume for each revenue stream
+- Growth rate assumptions (conservative, base, optimistic)
+- Seasonality adjustments if applicable
+
+#### Cost Structure
+- **Fixed costs**: rent, salaries, insurance, licenses, software
+- **Variable costs**: materials, commissions, payment processing fees
+- **CapEx**: equipment, vehicles, technology (with depreciation schedule)
+- **Working capital**: inventory, accounts receivable/payable
+
+#### P&L Projection Template
+\`\`\`
+                    Year 1    Year 2    Year 3    Year 4    Year 5
+Revenue             $___      $___      $___      $___      $___
+- COGS              $___      $___      $___      $___      $___
+= Gross Profit      $___      $___      $___      $___      $___
+- Operating Expenses $___     $___      $___      $___      $___
+= EBITDA            $___      $___      $___      $___      $___
+- Depreciation      $___      $___      $___      $___      $___
+= EBIT              $___      $___      $___      $___      $___
+- Taxes             $___      $___      $___      $___      $___
+= Net Profit        $___      $___      $___      $___      $___
+\`\`\`
+
+### Step 6: Investment Analysis
+- **Initial investment** needed (CapEx + working capital + launch costs)
+- **NPV** (Net Present Value) at 10-15% discount rate
+- **IRR** (Internal Rate of Return) — must exceed cost of capital
+- **Payback period** — when cumulative cash flow turns positive
+- **Break-even point** — monthly revenue needed to cover all costs
+
+### Step 7: Risk Analysis
+- List top 5 risks with probability and impact
+- Mitigation strategy for each risk
+- Sensitivity analysis: what if price drops 20%? What if demand is 50% lower?
+- Best case / Base case / Worst case scenarios
+
+### Step 8: Depreciation & Asset Management
+- Straight-line depreciation for vehicles, equipment, technology
+- Formula: (Purchase Price - Salvage Value) / Useful Life
+- Include replacement schedule in CapEx projections
+- Track asset utilization rates
+
+### Step 9: MANDATORY Market Research (Before Any Numbers!)
+- NEVER build a financial model without researching the market first
+- Use web scraping tools to gather REAL competitor prices from their websites
+- Search for industry reports (Statista, IBISWorld, government data portals)
+- Find average prices, occupancy rates, utilization rates for the specific industry
+- Research the target geography: local regulations, tax rates, average wages
+- Collect at least 5 competitor data points for pricing validation
+- Check Google Maps / TripAdvisor / booking platforms for real market data
+- Every assumption in the model must cite a source or explain the research behind it
+
+### Key Rules
+- NEVER guess numbers — research them. Use web tools to find real market data
+- ALWAYS state your assumptions explicitly — every number needs a source or rationale
+- Use conservative estimates for revenue, aggressive for costs
+- Include monthly granularity for Year 1, quarterly for Year 2-3, annual for Year 4-5
+- Build 3 scenarios: optimistic (+20%), base, pessimistic (-30%)
+- Calculate ALL metrics: ROI, NPV, IRR, payback, break-even, LTV/CAC
+- Compare with industry benchmarks where available
+- Cross-reference your model with at least 3 comparable businesses`,
+  },
+
+  // ═══ MARKET RESEARCH ═══
+  {
+    id: "market-research",
+    name: "Market Research & Competitive Intelligence",
+    description: "Market sizing, competitive landscape, customer segments, industry analysis",
+    category: "market-research",
+    tags: ["market", "research", "competitive", "intelligence", "tam", "sam", "som", "segment"],
+    instruction: `## Market Research & Competitive Intelligence
+
+### Market Sizing (TAM/SAM/SOM)
+- **Top-down**: Start with total market → subtract irrelevant segments
+- **Bottom-up**: Count potential customers × average spend
+- **Triangulate**: Cross-reference both methods with industry reports
+
+### Competitive Landscape
+- Identify 5-10 competitors (direct + indirect + potential)
+- Analyze: pricing, features, market share, strengths, weaknesses
+- Map competitive positioning (price vs value matrix)
+- Identify unserved niches and market gaps
+
+### Customer Research
+- Define 2-3 ideal customer personas with demographics + psychographics
+- Map customer journey: awareness → consideration → purchase → retention
+- Identify pain points and willingness to pay
+- Estimate customer acquisition channels and costs
+
+### Industry Analysis Frameworks
+- **PEST**: Political, Economic, Social, Technological factors
+- **Porter's Five Forces**: supplier power, buyer power, substitutes, new entrants, rivalry
+- **Value Chain**: where value is created and captured in the industry
+
+### Key Rules
+- Use primary AND secondary research (interviews + data)
+- Cite sources: government data, industry reports, competitor filings
+- Quantify everything — "large market" is not useful, "$2.4B market growing 12% CAGR" is
+- Update research quarterly — markets change fast`,
+  },
 ];
 
 /**

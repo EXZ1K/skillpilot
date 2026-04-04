@@ -116,6 +116,15 @@ export const SKILL_SOURCES: Record<string, SkillSource> = {
     baseUrl: "https://raw.githubusercontent.com/sickn33/antigravity-awesome-skills/main",
     totalSkills: 1340,
   },
+  business: {
+    id: "business",
+    name: "Business Strategy & Planning",
+    repo: "linuszz/business-strategy-planning-skills",
+    stars: "30",
+    quality: "B",
+    baseUrl: "https://raw.githubusercontent.com/linuszz/business-strategy-planning-skills/master",
+    totalSkills: 50,
+  },
 };
 
 /* ── Pre-selected skills per role (multi-source) ── */
@@ -281,6 +290,24 @@ export const ROLE_SKILLS: Record<string, SkillEntry[]> = {
     { id: "ag-growth-engine", path: "skills/growth-engine/SKILL.md", name: "Growth Engine", description: "Growth hacking, SEO, ASO, viral loops, conversion optimization.", category: "marketing", sourceId: "antigravity", quality: "C" },
     // Tier C: Antigravity
     { id: "ag-marketing", path: "skills/marketing-ideas/SKILL.md", name: "Marketing Ideas", description: "Proven marketing strategies and growth ideas for SaaS products.", category: "marketing", sourceId: "antigravity", quality: "C" },
+  ],
+
+  "business-analyst": [
+    // Tier B: Business Strategy (linuszz)
+    { id: "biz-market-sizing", path: "bp-financial-analysis/skills/market-sizing/SKILL.md", name: "Market Sizing", description: "Estimate market size using top-down, bottom-up, and triangulation methods. TAM/SAM/SOM calculations.", category: "business", sourceId: "business", quality: "B" },
+    { id: "biz-free-cash-flow", path: "bp-financial-analysis/skills/free-cash-flow/SKILL.md", name: "Free Cash Flow", description: "Model free cash flow for investment decisions, NPV, IRR, break-even analysis.", category: "business", sourceId: "business", quality: "B" },
+    { id: "biz-swot-analysis", path: "bp-business-modeling/skills/swot-analysis/SKILL.md", name: "SWOT Analysis", description: "Strengths, Weaknesses, Opportunities, Threats — strategic audit of organizational position.", category: "business", sourceId: "business", quality: "B" },
+    { id: "biz-forecasting", path: "bp-financial-analysis/skills/forecasting/SKILL.md", name: "Financial Forecasting", description: "Revenue, cost, and growth forecasting with trend analysis and projection models.", category: "business", sourceId: "business", quality: "B" },
+    { id: "biz-sensitivity", path: "bp-financial-analysis/skills/sensitivity-charts/SKILL.md", name: "Sensitivity Analysis", description: "Test how key assumptions impact outcomes — what-if scenarios for business decisions.", category: "business", sourceId: "business", quality: "B" },
+  ],
+
+  "strategy": [
+    // Tier B: Business Strategy (linuszz)
+    { id: "biz-porters", path: "bp-strategy-design/skills/porters-five-forces/SKILL.md", name: "Porter's Five Forces", description: "Analyze competitive intensity and attractiveness of an industry.", category: "strategy", sourceId: "business", quality: "B" },
+    { id: "biz-pest", path: "bp-strategy-design/skills/pest-analysis/SKILL.md", name: "PEST Analysis", description: "Political, Economic, Social, Technological factors affecting the business environment.", category: "strategy", sourceId: "business", quality: "B" },
+    { id: "biz-customer-seg", path: "bp-strategy-design/skills/customer-segmentation/SKILL.md", name: "Customer Segmentation", description: "Segment customers by behavior, demographics, needs to target effectively.", category: "strategy", sourceId: "business", quality: "B" },
+    { id: "biz-scenario", path: "bp-strategic-decision/skills/scenario-development/SKILL.md", name: "Scenario Development", description: "Develop multiple future scenarios to prepare for uncertainty and make robust decisions.", category: "strategy", sourceId: "business", quality: "B" },
+    { id: "biz-value-chain", path: "bp-strategy-design/skills/value-chain/SKILL.md", name: "Value Chain Analysis", description: "Map activities that create value — identify cost advantages and differentiation opportunities.", category: "strategy", sourceId: "business", quality: "B" },
   ],
 
   pm: [
