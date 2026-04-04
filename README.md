@@ -6,10 +6,11 @@ SkillPilot is an MCP (Model Context Protocol) server that turns a single project
 
 ## What it does
 
-1. **You describe your project** — "veterinary clinic website with booking and payments"
+1. **You describe your project** — "car rental service in Tbilisi with a business plan"
 2. **SkillPilot returns a complete plan:**
    - MCP agents to install (from 60+ curated catalog + 37K on GitHub)
    - Ready-to-use AI skills with full instructions (auth, payments, database, design, security...)
+   - **Business Analyst & Strategy Consultant** agents for financial modeling and market research
    - Open source projects to reference or fork
    - All API keys needed with direct links
    - Step-by-step roadmap for your IDE agent
@@ -38,6 +39,39 @@ Each team proposes a full stack with agents and skills. Your AI then:
 5. Implements only the winning plan
 
 This produces higher quality results through adversarial evaluation — instead of one opinion, you get a competition of ideas.
+
+## Business Intelligence — real market research, not guesswork
+
+SkillPilot now includes **Business Analyst** and **Strategy Consultant** agents that build data-driven business plans:
+
+```
+"Use skillpilot_plan for a car rental service in Batumi, Georgia with business plan"
+```
+
+### What the agents deliver
+
+| Agent | What it does |
+|-------|-------------|
+| **Business Analyst** | P&L projections, NPV/IRR, break-even, unit economics, depreciation, cash flow |
+| **Strategy Consultant** | Porter's Five Forces, PEST, SWOT, customer segmentation, go-to-market |
+| **Financial Modeler** (sub-agent) | Monthly financial models with 3 scenarios (optimistic/base/pessimistic) |
+| **Market Researcher** (sub-agent) | TAM/SAM/SOM, competitor pricing, industry benchmarks |
+| **Competitive Analyst** (sub-agent) | Real competitor data from web scraping, market positioning |
+| **Growth Strategist** (sub-agent) | Customer segments, acquisition channels, growth vectors |
+
+### Key: research first, model second
+
+Business agents use **Firecrawl** (web scraping MCP) to research the actual market before building any financial model. Every number in the business plan must cite a source or explain the assumption. No blind guessing.
+
+### 50 business skills from 8 sources
+
+Powered by [linuszz/business-strategy-planning-skills](https://github.com/linuszz/business-strategy-planning-skills) — 50 SKILL.md files covering:
+
+- **Financial Analysis** (15): free cash flow, market sizing, DuPont analysis, forecasting, sensitivity analysis...
+- **Business Modeling** (8): SWOT, RACI, business definition, strategy articulation...
+- **Strategy Design** (13): Porter's Five Forces, PEST, customer segmentation, value chain...
+- **Strategic Decisions** (6): risk matrix, scenario development, growth-share matrix...
+- **Visualization** (8): executive dashboards, marimekko charts, traffic lights...
 
 ## How it works
 
@@ -116,13 +150,13 @@ For battle mode:
 | `skillpilot_skills` | Find AI skills: universal prompts, IDE-specific, domain expert |
 | `skillpilot_projects` | Find open source projects to fork or reference |
 
-## 24 Agent Categories
+## 27 Agent Categories
 
-auth, payments, database, ai, email, deploy, review, security, video, storage, analytics, monitoring, cms, search, cache, notifications, testing, communication, project-management, documents, browser, marketing, design, docs
+auth, payments, database, ai, email, deploy, review, security, video, storage, analytics, monitoring, cms, search, cache, notifications, testing, communication, project-management, documents, browser, marketing, design, docs, **business-plan, financial-analysis, market-research**
 
 ## Built-in Skills
 
-19 curated skills with ready-to-use instructions across all categories:
+21 curated skills with ready-to-use instructions across all categories:
 
 - **Auth** — providers, sessions, protected routes, OAuth, roles
 - **Database** — schema design, naming, indexes, migrations, RLS
@@ -132,6 +166,8 @@ auth, payments, database, ai, email, deploy, review, security, video, storage, a
 - **Marketing** — SEO, meta tags, landing page structure, schema.org
 - **Deploy** — CI/CD pipeline, env vars, preview deployments, checklist
 - **Security** — OWASP top 10, input validation, SQL injection, secrets
+- **Business Plan** — TAM/SAM/SOM, unit economics, P&L projections, NPV/IRR, break-even, depreciation
+- **Market Research** — competitive intelligence, customer segmentation, industry analysis frameworks
 - **And more:** email, analytics, monitoring, testing, cache, search, CMS, video, storage, notifications
 
 Skills are universal — they describe patterns and principles, not vendor-specific code. Your AI picks the right tools for your stack.
@@ -142,7 +178,9 @@ Without skills, your AI spends thousands of tokens figuring out how to implement
 
 ## Smart Features
 
+- **Business Intelligence** — Business Analyst & Strategy Consultant agents with real market research via web scraping
 - **Battle Mode** — 3 competing strategies evaluated by your AI for higher quality plans
+- **8 skill sources** — 2,300+ community skills from Anthropic, GitHub Copilot, CursorRules, and 5 more providers
 - **LLM-driven categories** — Your IDE's AI picks the right categories, no keyword guessing
 - **Stack enrichment** — Redis in your stack? Cache skill auto-included. Python + FastAPI? AI skill added.
 - **GitHub discovery** — Finds relevant MCP servers, skills, and projects beyond the built-in catalog
